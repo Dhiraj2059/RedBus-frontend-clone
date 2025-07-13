@@ -1,16 +1,34 @@
-import { Search, MapPin, Calendar, Users, Star, Shield, Headphones, CreditCard } from "lucide-react"
+"use client"
+
+import { useState } from "react"
+import { Search, MapPin, Users, Star, Shield, Headphones, CreditCard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { DatePicker } from "@/components/date-picker"
 import Link from "next/link"
 import Image from "next/image"
 
 export default function HomePage() {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white py-16">
-        <div className="container mx-auto px-4">
+      <section className="relative bg-gradient-to-r from-red-600 to-red-700 text-white py-16 overflow-hidden">
+        {/* Background overlay */}
+        <div className="absolute inset-0 bg-black/30"></div>
+
+        {/* Bus background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+          style={{
+            backgroundImage: "url('/bus-hero-bg.png')",
+          }}
+        ></div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4">
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Nepal's No. 1 Online Bus Ticket Booking Site</h1>
             <p className="text-xl opacity-90">Book bus tickets online in just a few clicks</p>
@@ -18,43 +36,55 @@ export default function HomePage() {
 
           {/* Search Form */}
           <div className="max-w-4xl mx-auto">
-            <Card className="p-6">
+            <Card className="p-6 shadow-xl">
               <CardContent className="p-0">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                   <div className="relative">
                     <label className="block text-sm font-medium text-gray-700 mb-1">FROM</label>
                     <div className="relative">
-                      <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <Input placeholder="Bangalore" className="pl-10 h-12" defaultValue="Kathmandu" />
+                      <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400 z-10" />
+                      <Input
+                        placeholder="Kathmandu"
+                        className="pl-10 h-12 border-gray-300 focus:border-red-500 focus:ring-red-500"
+                        defaultValue="Kathmandu"
+                      />
                     </div>
                   </div>
 
                   <div className="relative">
                     <label className="block text-sm font-medium text-gray-700 mb-1">TO</label>
                     <div className="relative">
-                      <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <Input placeholder="Chennai" className="pl-10 h-12" defaultValue="Pokhara" />
+                      <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400 z-10" />
+                      <Input
+                        placeholder="Pokhara"
+                        className="pl-10 h-12 border-gray-300 focus:border-red-500 focus:ring-red-500"
+                        defaultValue="Pokhara"
+                      />
                     </div>
                   </div>
 
                   <div className="relative">
                     <label className="block text-sm font-medium text-gray-700 mb-1">DATE</label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <Input type="date" className="pl-10 h-12" defaultValue="2024-01-15" />
-                    </div>
+                    <DatePicker date={selectedDate} onDateChange={setSelectedDate} placeholder="Select travel date" />
                   </div>
 
                   <div className="relative">
                     <label className="block text-sm font-medium text-gray-700 mb-1">PASSENGERS</label>
                     <div className="relative">
-                      <Users className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <Input placeholder="1" className="pl-10 h-12" defaultValue="1" />
+                      <Users className="absolute left-3 top-3 h-4 w-4 text-gray-400 z-10" />
+                      <Input
+                        placeholder="1"
+                        className="pl-10 h-12 border-gray-300 focus:border-red-500 focus:ring-red-500"
+                        defaultValue="1"
+                        type="number"
+                        min="1"
+                        max="9"
+                      />
                     </div>
                   </div>
 
                   <div className="flex items-end">
-                    <Button asChild className="w-full h-12 bg-red-600 hover:bg-red-700">
+                    <Button asChild className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-semibold">
                       <Link href="/search">
                         <Search className="mr-2 h-4 w-4" />
                         SEARCH BUSES
@@ -71,7 +101,7 @@ export default function HomePage() {
       {/* Features Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose redBus?</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose NepBus?</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
